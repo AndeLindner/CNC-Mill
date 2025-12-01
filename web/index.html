@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CNC Controller</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header>
+    <div class="title">CNC Controller</div>
+    <div id="status-bar" class="status">Status: -- | Feed: -- | Spindle: --</div>
+  </header>
+  <main>
+    <section class="controls">
+      <div class="card">
+        <div class="card-title">Job</div>
+        <div class="row">
+          <label>G-Code Datei</label>
+          <select id="file-select"></select>
+          <button id="refresh-files">⟳</button>
+        </div>
+        <div class="row">
+          <input type="file" id="file-upload" accept=".gcode,.nc">
+          <button id="upload-btn">Upload</button>
+        </div>
+        <div class="row">
+          <label>Werkzeug</label>
+          <select id="tool-select"></select>
+          <button id="new-tool-btn">Neues Werkzeug</button>
+        </div>
+        <div class="row actions">
+          <button id="start-btn" class="primary">Start</button>
+          <button id="pause-btn">Pause</button>
+          <button id="resume-btn">Weiter</button>
+          <button id="stop-btn" class="danger">Stopp</button>
+        </div>
+        <div class="row">
+          <label>Homing</label>
+          <button id="home-btn">Home</button>
+          <span id="line-info"></span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Offsets</div>
+        <div class="row offset-fields">
+          <label>Werkstück Null</label>
+          <input id="wco-x" type="number" step="0.01" placeholder="X">
+          <input id="wco-y" type="number" step="0.01" placeholder="Y">
+          <input id="wco-z" type="number" step="0.01" placeholder="Z">
+          <button id="set-wco-btn">Setzen</button>
+        </div>
+        <div class="row">
+          <label>Maschinenpos</label>
+          <span id="pos-display">X: -- Y: -- Z: --</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Manuelles Steuern</div>
+        <div class="row manual-toggle-row">
+          <button id="manual-toggle" class="toggle-btn">Manuelles Steuern aus</button>
+        </div>
+        <p class="manual-hint">A/D = X, W/S = Y, Pfeil ↑/↓ = Z</p>
+      </div>
+      <div class="card" id="tool-form-card">
+        <div class="card-title">Werkzeug hinzufügen</div>
+        <div class="grid">
+          <input id="tool-name" placeholder="Name">
+          <input id="tool-diameter" type="number" step="0.01" placeholder="Durchmesser mm">
+          <input id="tool-length" type="number" step="0.01" placeholder="Länge mm">
+          <input id="tool-rpm" type="number" step="10" placeholder="RPM">
+          <input id="tool-feed" type="number" step="1" placeholder="Vorschub mm/min">
+          <select id="tool-dir">
+            <option value="CW">CW</option>
+            <option value="CCW">CCW</option>
+          </select>
+          <label class="inline"><input id="tool-climb" type="checkbox"> Gleichlauf</label>
+        </div>
+        <button id="save-tool-btn">Speichern</button>
+      </div>
+    </section>
+    <section class="viewer">
+      <canvas id="viewport"></canvas>
+    </section>
+  </main>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
